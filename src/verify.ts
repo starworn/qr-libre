@@ -23,3 +23,12 @@ export function verifyRgba(
   const decoded = res ? new TextDecoder().decode(new Uint8Array(res.binaryData)) : null;
   return { ok: decoded === expected, decoded };
 }
+
+/**
+ * Raster size for the in-app check: 512 px is plenty for normal links, but dense codes (long text)
+ * need ~5 px per module to decode. Never exceed the export size — if it doesn't read there, the
+ * exported file won't either.
+ */
+export function verifyPixelSize(modules: number, margin: number, exportSize: number): number {
+  return Math.min(exportSize, Math.max(512, (modules + 2 * margin) * 5));
+}

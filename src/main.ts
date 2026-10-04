@@ -3,7 +3,7 @@ import { ask, save } from '@tauri-apps/plugin-dialog';
 import { writeFile, writeTextFile } from '@tauri-apps/plugin-fs';
 import { encode, normalizeText, TooLongError, type QrMatrix } from './encode';
 import { renderSvg } from './render';
-import { verifyRgba, type VerifyResult } from './verify';
+import { verifyPixelSize, verifyRgba, type VerifyResult } from './verify';
 import { analyzeColors } from './contrast';
 import { applyColorMetadata } from './png-chunks';
 import { canvasRgba, canvasToPngBytes, svgToCanvas } from './raster';
@@ -21,7 +21,6 @@ const deps: ExportDeps = {
   writeText: (p, d) => writeTextFile(p, d),
 };
 
-const VERIFY_PX = 512;
 let matrix: QrMatrix | null = null;
 let lastVerify: VerifyResult | null = null;
 let verifyToken = 0;
@@ -49,7 +48,8 @@ function scheduleVerify(m: QrMatrix, s: Style, text: string) {
   verifyTimer = window.setTimeout(async () => {
     let result: VerifyResult;
     try {
-      const canvas = await svgToCanvas(renderSvg(m, s, { width: String(VERIFY_PX), height: String(VERIFY_PX) }), VERIFY_PX);
+      const px = verifyPixelSize(m.size, s.margin, s.exportSize);
+      const canvas = await svgToCanvas(renderSvg(m, s, { width: String(px), height: String(px) }), px);
       const { rgba, width, height } = canvasRgba(canvas);
       result = verifyRgba(rgba, width, height, text);
     } catch (err) {
