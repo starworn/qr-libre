@@ -2,7 +2,7 @@
 
 Códigos QR que no caducan. Gratis, sin cuentas y sin servidores.
 
-<!-- captura de la app: docs/screenshot.png -->
+![QR Libre](docs/screenshot.png)
 
 [English below](#english)
 
