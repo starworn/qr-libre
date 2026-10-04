@@ -87,6 +87,7 @@ function update() {
     clearTimeout(verifyTimer);
     verifyToken++;
     $('preview').replaceChildren();
+    $('preview').removeAttribute('aria-label');
     setStatus(e instanceof TooLongError ? 'fail' : 'idle', t(e instanceof TooLongError ? 'statusTooLong' : 'statusEmpty'));
     setExportEnabled(false);
     renderWarnings([]);
@@ -94,6 +95,7 @@ function update() {
   }
 
   $('preview').innerHTML = renderSvg(matrix, s, { width: '100%', height: '100%' });
+  $('preview').setAttribute('aria-label', t('previewLabel', { text }));
   setExportEnabled(true);
 
   const report = analyzeColors(s);

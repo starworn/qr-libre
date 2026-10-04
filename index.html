@@ -8,9 +8,9 @@
   <body>
     <main class="app">
       <section class="preview-col">
-        <div id="preview" class="preview"></div>
-        <p id="status" class="status" data-kind="idle"></p>
-        <ul id="warnings" class="warnings"></ul>
+        <div id="preview" class="preview" role="img"></div>
+        <p id="status" class="status" data-kind="idle" role="status" aria-live="polite"></p>
+        <ul id="warnings" class="warnings" aria-live="polite"></ul>
       </section>
 
       <section class="controls">

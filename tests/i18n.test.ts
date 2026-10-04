@@ -16,3 +16,13 @@ describe('i18n', () => {
     setLang('es');
   });
 });
+
+describe('accessibility labels', () => {
+  it('describes the preview with the encoded link in both languages', () => {
+    setLang('es');
+    expect(t('previewLabel', { text: 'https://a.b' })).toBe('Código QR para https://a.b');
+    setLang('en');
+    expect(t('previewLabel', { text: 'https://a.b' })).toBe('QR code for https://a.b');
+    setLang('es');
+  });
+});
