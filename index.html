@@ -36,8 +36,8 @@
 
         <fieldset>
           <legend data-i18n="shape"></legend>
-          <label class="field"><span data-i18n="moduleRadius"></span><input id="moduleRadius" type="range" min="0" step="1" /></label>
-          <label class="field"><span data-i18n="eyeRadius"></span><input id="eyeRadius" type="range" min="0" step="1" /></label>
+          <label class="field"><span><span data-i18n="moduleRadius"></span> · <output id="moduleRadiusValue"></output></span><input id="moduleRadius" type="range" min="0" step="1" /></label>
+          <label class="field"><span><span data-i18n="eyeRadius"></span> · <output id="eyeRadiusValue"></output></span><input id="eyeRadius" type="range" min="0" step="1" /></label>
         </fieldset>
 
         <fieldset>
@@ -53,7 +53,7 @@
             <label class="swatch"><input id="color1" type="color" /><span data-i18n="color1"></span></label>
             <label class="swatch grad-only"><input id="color2" type="color" /><span data-i18n="color2"></span></label>
           </div>
-          <label class="field linear-only"><span data-i18n="angle"></span><input id="gradientAngle" type="range" min="0" max="360" step="5" /></label>
+          <label class="field linear-only"><span><span data-i18n="angle"></span> · <output id="gradientAngleValue"></output></span><input id="gradientAngle" type="range" min="0" max="360" step="5" /></label>
           <div class="row">
             <label class="check"><input id="eyeColorEnabled" type="checkbox" /><span data-i18n="eyeColor"></span></label>
             <input id="eyeColor" type="color" />
@@ -68,13 +68,13 @@
         <fieldset>
           <legend data-i18n="background"></legend>
           <div class="row">
+            <label class="swatch"><input id="bgColor" type="color" /><span data-i18n="bgColor"></span></label>
             <label class="check"><input id="bgTransparent" type="checkbox" /><span data-i18n="transparent"></span></label>
-            <input id="bgColor" type="color" />
           </div>
           <label class="field"><span><span data-i18n="margin"></span> · <output id="marginValue"></output></span>
             <input id="margin" type="range" min="0" max="8" step="1" />
           </label>
-          <label class="field"><span data-i18n="bgRadius"></span><input id="bgRadius" type="range" min="0" step="1" /></label>
+          <label class="field"><span><span data-i18n="bgRadius"></span> · <output id="bgRadiusValue"></output></span><input id="bgRadius" type="range" min="0" step="1" /></label>
         </fieldset>
 
         <fieldset>

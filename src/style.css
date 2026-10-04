@@ -39,7 +39,7 @@ legend { font-weight: 700; padding: 0 6px; }
 .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin: 6px 0; }
 .swatch, .check { display: flex; align-items: center; gap: 6px; font-size: 0.9rem; }
 input[type='text'], select { font: inherit; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; }
-input[type='color'] { width: 40px; height: 28px; border: none; padding: 0; background: none; }
+input[type='color'] { width: 40px; height: 28px; border: 1px solid #cfc4dd; border-radius: 6px; padding: 2px; background: var(--panel); cursor: pointer; }
 input[type='color']:disabled { opacity: 0.35; }
 input[type='range'] { accent-color: var(--accent); }
 .contrast { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; margin-top: 6px; }

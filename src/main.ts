@@ -70,6 +70,8 @@ function update() {
   $<HTMLInputElement>('eyeColor').disabled = !s.eyeColorEnabled;
   $<HTMLInputElement>('bgColor').disabled = s.bgTransparent;
   $('marginValue').textContent = String(s.margin);
+  for (const k of ['moduleRadius', 'eyeRadius', 'bgRadius'] as const) $(`${k}Value`).textContent = `${Math.round(s[k] * 100)} %`;
+  $('gradientAngleValue').textContent = `${s.gradientAngle}°`;
   $('targetDesc').textContent = t(s.target === 'print' ? 'targetPrintDesc' : 'targetScreenDesc');
   $('physical').textContent = s.target === 'print'
     ? t('physical', { px: s.exportSize, cm: physicalSize(s.exportSize).cm.toFixed(1), dpi: PRINT_DPI })
