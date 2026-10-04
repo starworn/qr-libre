@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {
-  DEFAULT_SETTINGS, DEFAULT_STYLE, LIMITS, loadSettings, saveSettings, sanitizeStyle,
+  DEFAULT_SETTINGS, DEFAULT_STYLE, LIMITS, loadSettings, resetStyle, saveSettings, sanitizeStyle,
 } from '../src/settings';
 
 const mem = (init: Record<string, string> = {}) => {
@@ -69,5 +69,18 @@ describe('settings', () => {
     const loaded = loadSettings(s);
     expect(loaded.style).toEqual({ ...DEFAULT_STYLE, margin: 2 });
     expect(loaded.lang).toBe('es');
+  });
+});
+
+describe('resetStyle', () => {
+  it('restores the default style but keeps the text and language', () => {
+    const custom = {
+      text: 'https://carriecatt.carrd.co',
+      lang: 'en' as const,
+      style: { ...DEFAULT_STYLE, moduleRadius: 0.6, fillMode: 'linear' as const, bgColor: '#f6effb' },
+    };
+    const r = resetStyle(custom);
+    expect(r).toEqual({ text: 'https://carriecatt.carrd.co', lang: 'en', style: DEFAULT_STYLE });
+    expect(r.style).not.toBe(DEFAULT_STYLE); // a copy, so later edits never mutate the defaults
   });
 });

@@ -56,6 +56,9 @@ const es = {
   confirmExportTitle: 'Este QR podría no leerse',
   confirmExportMsg: 'La comprobación no logró leer este QR. ¿Guardarlo de todos modos?',
   langToggle: 'English',
+  reset: 'Restablecer',
+  confirmResetTitle: 'Restablecer el estilo',
+  confirmResetMsg: '¿Volver a negro sobre blanco con los ajustes iniciales? Tu enlace se conserva.',
 } as const;
 
 type Dict = Record<keyof typeof es, string>;
@@ -116,6 +119,9 @@ const en: Dict = {
   confirmExportTitle: 'This QR may not scan',
   confirmExportMsg: 'The check could not read this QR. Save it anyway?',
   langToggle: 'Español',
+  reset: 'Reset',
+  confirmResetTitle: 'Reset style',
+  confirmResetMsg: 'Go back to black on white with the initial settings? Your link is kept.',
 };
 
 export const DICT: Record<Lang, Dict> = { es, en };

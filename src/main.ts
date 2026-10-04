@@ -8,7 +8,7 @@ import { analyzeColors } from './contrast';
 import { applyColorMetadata } from './png-chunks';
 import { canvasRgba, canvasToPngBytes, svgToCanvas } from './raster';
 import { defaultFileName, exportFile, physicalSize, PRINT_DPI, svgSizeAttrs, type ExportDeps } from './export';
-import { LIMITS, loadSettings, saveSettings, type ExportSize, type Style } from './settings';
+import { LIMITS, loadSettings, resetStyle, saveSettings, type ExportSize, type Style } from './settings';
 import { applyI18n, setLang, t } from './i18n';
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
@@ -196,6 +196,12 @@ function init() {
     setLang(settings.lang);
     applyI18n();
     update();
+  });
+  $('reset').addEventListener('click', async () => {
+    const go = await ask(t('confirmResetMsg'), { title: t('confirmResetTitle'), kind: 'warning' });
+    if (!go) return;
+    saveSettings(storage, resetStyle(settings));
+    location.reload(); // controls initialise from storage, so a reload re-syncs every input
   });
   $('savePng').addEventListener('click', () => void doExport('png'));
   $('saveSvg').addEventListener('click', () => void doExport('svg'));

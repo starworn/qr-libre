@@ -127,3 +127,8 @@ export function saveSettings(storage: Pick<Storage, 'setItem'> | null, s: Settin
     // Storage blocked or full: settings just won't persist.
   }
 }
+
+/** Back to black-on-white; the link and language are the user's, not part of the look. */
+export function resetStyle(s: Settings): Settings {
+  return { ...s, style: structuredClone(DEFAULT_STYLE) };
+}
