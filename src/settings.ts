@@ -105,18 +105,27 @@ export function sanitizeStyle(raw: unknown): Style {
   };
 }
 
-export function loadSettings(storage: Pick<Storage, 'getItem'> | null): Settings {
+export function detectLang(locale: string | undefined): Lang {
+  return locale?.toLowerCase().startsWith('es') ? 'es' : 'en';
+}
+
+/** `firstRunLang` applies only when nothing (valid) is saved yet; a saved language always wins. */
+export function loadSettings(
+  storage: Pick<Storage, 'getItem'> | null,
+  firstRunLang: Lang = DEFAULT_SETTINGS.lang,
+): Settings {
+  const fresh = (): Settings => ({ ...structuredClone(DEFAULT_SETTINGS), lang: firstRunLang });
   try {
     const raw = storage?.getItem(KEY);
-    if (!raw) return structuredClone(DEFAULT_SETTINGS);
+    if (!raw) return fresh();
     const p = JSON.parse(raw) as Record<string, unknown> | null;
     return {
       text: typeof p?.text === 'string' ? p.text : '',
       style: sanitizeStyle(p?.style),
-      lang: oneOf(p?.lang, LANGS, DEFAULT_SETTINGS.lang),
+      lang: oneOf(p?.lang, LANGS, firstRunLang),
     };
   } catch {
-    return structuredClone(DEFAULT_SETTINGS);
+    return fresh();
   }
 }
 

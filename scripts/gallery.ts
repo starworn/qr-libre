@@ -52,16 +52,16 @@ for (const [name, patch] of CASES) {
   const { rgba, width, height } = rasterRgba(renderSvg(m, s), 400);
   const v = verifyRgba(rgba, width, height, URL);
   const c = analyzeColors(s);
-  rows.push(`<figure class="${v.ok ? 'ok' : 'fail'}"><img src="${name}.png"><figcaption><b>${name}</b><br>${v.ok ? '✓ se lee' : '⚠ no se lee'} · contraste ${c.minContrast.toFixed(1)}:1<pre>${JSON.stringify(patch, null, 1)}</pre></figcaption></figure>`);
+  rows.push(`<figure class="${v.ok ? 'ok' : 'fail'}"><img src="${name}.png"><figcaption><b>${name}</b><br>${v.ok ? '✓ scans' : '⚠ does not scan'} · contrast ${c.minContrast.toFixed(1)}:1<pre>${JSON.stringify(patch, null, 1)}</pre></figcaption></figure>`);
   console.log(`${v.ok ? 'OK  ' : 'FAIL'} ${name}`);
 }
 
-writeFileSync(join(OUT, 'index.html'), `<!doctype html><meta charset="utf-8"><title>QR Libre — galería</title>
+writeFileSync(join(OUT, 'index.html'), `<!doctype html><meta charset="utf-8"><title>QR Libre — gallery</title>
 <style>body{font-family:system-ui;background:#888;margin:20px}main{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
 figure{margin:0;background:#fff;padding:10px;border-radius:10px;border:4px solid #2a7}figure.fail{border-color:#c33}
 img{width:100%;background:repeating-conic-gradient(#ddd 0% 25%,#fff 0% 50%) 50%/20px 20px}pre{font-size:11px;white-space:pre-wrap}</style>
-<h1>Galería — ${URL}</h1><main>${rows.join('\n')}</main>`);
-console.log(`\n${CASES.length} casos → ${OUT}/index.html`);
+<h1>Gallery — ${URL}</h1><main>${rows.join('\n')}</main>`);
+console.log(`\n${CASES.length} cases → ${OUT}/index.html`);
 const DELIV = join('deliverables', 'carriecatt');
 rmSync(DELIV, { recursive: true, force: true });
 mkdirSync(DELIV, { recursive: true });
@@ -74,10 +74,10 @@ for (const [file, extra] of VERSIONS) {
   const m = encode(URL, s.ecc);
   const px = s.exportSize;
   const { rgba, width, height } = rasterRgba(renderSvg(m, s), 400);
-  if (!verifyRgba(rgba, width, height, URL).ok) throw new Error(`${file} no se lee`);
+  if (!verifyRgba(rgba, width, height, URL).ok) throw new Error(`${file} does not scan`);
   writeFileSync(join(DELIV, `${file}.png`),
     applyColorMetadata(rasterPng(renderSvg(m, s, { width: String(px), height: String(px) }), px)));
   writeFileSync(join(DELIV, `${file}.svg`),
     `<?xml version="1.0" encoding="UTF-8"?>\n${renderSvg(m, s, svgSizeAttrs(s))}\n`);
 }
-console.log(`entregables → ${DELIV}/`);
+console.log(`deliverables → ${DELIV}/`);

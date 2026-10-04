@@ -1,87 +1,99 @@
 # QR Libre
 
-Códigos QR que no caducan. Gratis, sin cuentas y sin servidores.
+QR codes that never expire. Free, no accounts, no servers.
 
 ![QR Libre](docs/screenshot.png)
 
-[English below](#english)
+[Español más abajo](#español)
 
-## ¿Por qué no caduca?
+## Why it never expires
 
-Un código QR es un estándar abierto: los cuadritos guardan **tu enlace mismo**, y cualquier cámara lo lee sin preguntarle a nadie. Muchos generadores "gratuitos" hacen otra cosa: crean un QR *dinámico* que apunta a un enlace de **su** servidor, y ese servidor te redirige a tu página. Cuando se acaba la prueba gratis o el servicio cierra, cortan la redirección y tu QR deja de funcionar, aunque ya lo hayas impreso.
+A QR code is an open standard: the pattern stores **your link itself**, and any camera can read it without asking anyone. Many "free" generators do something else: they create a *dynamic* code that points to a link on **their** server, which then redirects to your page. When the trial ends or the service shuts down, they cut the redirect and your code stops working, even if it's already printed.
 
-QR Libre solo genera QR estáticos. El código funciona mientras exista tu página, y no depende de esta app ni de nadie más.
+QR Libre only makes static codes. They work for as long as your page exists, and depend on neither this app nor anyone else.
 
-## Descargar
+## Download
 
-1. Ve a [la última versión](https://github.com/starworn/qr-libre/releases/latest) y descarga `qr-libre-vX.Y.Z-windows-x64.exe`.
-2. Dale doble clic. No hay que instalar nada.
+1. Go to [the latest release](https://github.com/starworn/qr-libre/releases/latest) and download `qr-libre-vX.Y.Z-windows-x64.exe`.
+2. Double-click it. Nothing to install.
 
-Requiere **Windows 10 u 11**. No funciona en Windows 7 u 8.
+Requires **Windows 10 or 11**. It does not run on Windows 7 or 8.
 
-### "Windows protegió su PC"
+### "Windows protected your PC"
 
-La primera vez, Windows puede mostrar ese aviso azul. Sale porque el programa no tiene firma digital: firmarlo cuesta dinero cada año, y esto es un proyecto gratuito. Para abrirlo:
+The first time, Windows may show that blue warning. It appears because the program has no digital signature: signing costs money every year, and this is a free project. To open it:
 
-1. Haz clic en **Más información**.
-2. Haz clic en **Ejecutar de todos modos**.
+1. Click **More info**.
+2. Click **Run anyway**.
 
-<!-- captura de SmartScreen: añadir tras la primera prueba en Windows -->
+<!-- SmartScreen screenshot: add after the first Windows test -->
 
-Si prefieres no confiar en un ejecutable, puedes revisar el código y compilarlo tú (ver abajo).
+If you'd rather not trust an executable, you can read the code and build it yourself (see below).
 
-## Uso
+## Usage
 
-1. Pega tu enlace.
-2. Ajusta la forma, los colores y el fondo. La vista previa cambia en vivo.
-3. Fíjate en el indicador bajo el QR: **✓ Se lee correctamente** quiere decir que la app lo leyó con éxito. Si dice **⚠**, baja el redondeo o sube el contraste.
-4. Haz clic en **Guardar PNG** o **Guardar SVG**.
+1. Paste your link.
+2. Adjust the shape, colours and background. The preview updates live.
+3. Watch the indicator below the code: **✓ Scans correctly** means the app read it successfully. If it shows **⚠**, lower the rounding or raise the contrast.
+4. Click **Save PNG** or **Save SVG**.
 
-Consejos:
-- Los cuadritos deben ser **más oscuros** que el fondo. Al revés (claro sobre oscuro) muchos celulares no lo leen.
-- Deja margen alrededor del QR (4 es el estándar). Con menos de 2 puede fallar si lo pegas sobre una imagen.
-- El **fondo transparente** sirve para pegarlo sobre fondos claros.
-- El **SVG** es vectorial: se puede imprimir a cualquier tamaño sin pixelarse. Úsalo para tarjetas, stickers o lonas.
+Tips:
+- Modules must be **darker** than the background. The other way round (light on dark) fails on many phones.
+- Leave a margin around the code (4 is the standard). Below 2 it may fail when placed on top of an image.
+- A **transparent background** is meant for light surfaces.
+- **SVG** is vector: it prints at any size without pixelating. Use it for cards, stickers or banners.
+- **Reset** brings the style back to plain black on white (your link is kept).
+- The app opens in Spanish or English depending on your system language; the button at the top switches it.
 
-## Color e impresión
+## Colour and print
 
-- Los PNG llevan incrustado el perfil de color **sRGB**, así que se ven igual en cualquier navegador, celular o editor.
-- Con el destino **Impresión**, el PNG además guarda una resolución de **300 DPI** y la app te muestra el tamaño físico (por ejemplo, 2048 px = 17.3 cm). El SVG se guarda en milímetros.
-- Los colores muy saturados (neón) se ven más apagados en papel; la app te avisa.
-- **¿Por qué no hay exportación CMYK?** Convertir a CMYK bien requiere el perfil ICC de *cada* imprenta. Uno genérico suele dar peores resultados que dejar que la imprenta convierta. Mándales el PNG o el SVG en sRGB: es lo que esperan.
+- PNGs embed the **sRGB** colour profile, so they look the same in any browser, phone or editor.
+- With the **Print** destination, the PNG also stores **300 DPI** and the app shows the physical size (e.g. 2048 px = 17.3 cm). SVGs are saved in millimetres.
+- Very saturated (neon) colours look duller on paper; the app warns you.
+- **Why no CMYK export?** Converting to CMYK properly needs *each* print shop's own ICC profile. A generic one usually does worse than letting the print shop convert. Send them the sRGB PNG or SVG: that's what they expect.
 
-## Compilar desde el código
+## Example: the "carriecatt" preset
 
-Necesitas [Node.js](https://nodejs.org) (LTS) y [Rust](https://rustup.rs), más los [requisitos de Tauri](https://tauri.app/start/prerequisites/) de tu sistema.
+The ready-made example in [`deliverables/carriecatt/`](deliverables/carriecatt/) (with and without background) uses a palette taken from the avatar of illustrator **Carrie Catt**. Check out her work at [carriecatt.carrd.co](https://carriecatt.carrd.co).
+
+<img src="deliverables/carriecatt/qr-carriecatt.png" alt="QR code for carriecatt.carrd.co in plum, violet and magenta" width="220">
+
+## Building from source
+
+You need [Node.js](https://nodejs.org) (LTS) and [Rust](https://rustup.rs), plus the [Tauri prerequisites](https://tauri.app/start/prerequisites/) for your system.
 
 ```bash
 npm ci
-npm test               # pruebas, incluida la de ida y vuelta (generar → leer)
-npm run tauri dev      # abrir la app en modo desarrollo
-npm run gallery        # galería de ejemplos en gallery/index.html
-npx tauri build --no-bundle   # ejecutable en src-tauri/target/release/
+npm test                      # tests, including the generate → decode round-trip
+npm run tauri dev             # run the app in development mode
+npm run gallery               # example gallery in gallery/index.html
+npx tauri build --no-bundle   # executable in src-tauri/target/release/
 ```
 
-En Linux con NVIDIA + Wayland, usa `./launch.sh`, que aplica `WEBKIT_DISABLE_DMABUF_RENDERER=1` para evitar un fallo de WebKitGTK.
+On Linux with NVIDIA + Wayland, use `./launch.sh`, which sets `WEBKIT_DISABLE_DMABUF_RENDERER=1` to avoid a WebKitGTK crash.
 
-Para publicar una versión basta con subir un tag `v*` (por ejemplo `v0.2.0`): GitHub Actions compila el `.exe` en Windows y lo adjunta al release.
+To publish a version, push a `v*` tag (e.g. `v0.2.0`): GitHub Actions builds the `.exe` on Windows and attaches it to the release.
+
+Issues and pull requests are welcome, and so are forks.
 
 ---
 
-## English
+## Español
 
-**QR codes that never expire. Free, no accounts, no servers.**
+**Códigos QR que no caducan. Gratis, sin cuentas y sin servidores.**
 
-**Why it doesn't expire:** a QR code is an open standard: the pattern stores *your link itself*. Many "free" generators instead make *dynamic* codes that point to their server and redirect to you; when the trial ends, they cut the redirect and your printed code dies. QR Libre only makes static codes that work as long as your page exists.
+**¿Por qué no caduca?** Un QR es un estándar abierto: los cuadritos guardan *tu enlace mismo*. Muchos generadores "gratuitos" crean en cambio códigos *dinámicos* que apuntan a su servidor y te redirigen; cuando se acaba la prueba, cortan la redirección y tu QR impreso deja de funcionar. QR Libre solo hace códigos estáticos, que funcionan mientras exista tu página.
 
-**Download:** grab `qr-libre-vX.Y.Z-windows-x64.exe` from the [latest release](https://github.com/starworn/qr-libre/releases/latest) and double-click it. No install. Requires Windows 10 or 11. If Windows shows "Windows protected your PC" (the exe is unsigned because signing costs money every year), click **More info → Run anyway**.
+**Descargar:** baja `qr-libre-vX.Y.Z-windows-x64.exe` de [la última versión](https://github.com/starworn/qr-libre/releases/latest) y dale doble clic. No hay que instalar nada. Requiere Windows 10 u 11. Si Windows muestra "Windows protegió su PC" (el programa no está firmado porque firmarlo cuesta dinero cada año), haz clic en **Más información → Ejecutar de todos modos**.
 
-**Use:** paste your link, adjust shape/colours/background, check that the indicator says **✓ Scans correctly**, then **Save PNG** or **Save SVG**. Keep modules darker than the background and leave a margin of at least 2 (4 is standard). Transparent backgrounds are for light surfaces. SVG is vector, so it prints at any size.
+**Uso:** pega tu enlace, ajusta forma, colores y fondo, revisa que el indicador diga **✓ Se lee correctamente** y haz clic en **Guardar PNG** o **Guardar SVG**. Los cuadritos deben ser más oscuros que el fondo y conviene dejar un margen de al menos 2 (4 es el estándar). El fondo transparente es para superficies claras. El SVG es vectorial, así que se imprime a cualquier tamaño. **Restablecer** regresa el estilo a negro sobre blanco.
 
-**Colour & print:** PNGs embed the sRGB profile. The *Print* destination also stores 300 DPI and shows the physical size; SVG is saved in millimetres. There's no CMYK export: doing it properly needs each print shop's ICC profile, so send them the sRGB file and let them convert.
+**Color e impresión:** los PNG llevan el perfil sRGB. El destino *Impresión* además guarda 300 DPI y muestra el tamaño físico; el SVG se guarda en milímetros. No hay exportación CMYK: hacerlo bien requiere el perfil ICC de cada imprenta, así que mándales el archivo sRGB y que ellos lo conviertan.
 
-**Build:** `npm ci`, `npm test`, `npm run tauri dev` (Linux NVIDIA+Wayland: `./launch.sh`), `npm run gallery`, `npx tauri build --no-bundle`. Pushing a `v*` tag builds and publishes the Windows exe via GitHub Actions.
+**Ejemplo:** el preset "carriecatt" usa la paleta del avatar de la ilustradora **Carrie Catt** — conoce su trabajo en [carriecatt.carrd.co](https://carriecatt.carrd.co).
 
-## Licencia / License
+**Compilar:** `npm ci`, `npm test`, `npm run tauri dev` (Linux NVIDIA+Wayland: `./launch.sh`), `npm run gallery`, `npx tauri build --no-bundle`. Subir un tag `v*` compila y publica el `.exe` de Windows con GitHub Actions.
+
+## License / Licencia
 
 [MIT](LICENSE)

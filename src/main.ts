@@ -8,12 +8,12 @@ import { analyzeColors } from './contrast';
 import { applyColorMetadata } from './png-chunks';
 import { canvasRgba, canvasToPngBytes, svgToCanvas } from './raster';
 import { defaultFileName, exportFile, physicalSize, PRINT_DPI, svgSizeAttrs, type ExportDeps } from './export';
-import { LIMITS, loadSettings, resetStyle, saveSettings, type ExportSize, type Style } from './settings';
+import { detectLang, LIMITS, loadSettings, resetStyle, saveSettings, type ExportSize, type Style } from './settings';
 import { applyI18n, setLang, t } from './i18n';
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
 const storage = (() => { try { return window.localStorage; } catch { return null; } })();
-const settings = loadSettings(storage);
+const settings = loadSettings(storage, detectLang(navigator.language));
 
 const deps: ExportDeps = {
   saveDialog: (o) => save(o),

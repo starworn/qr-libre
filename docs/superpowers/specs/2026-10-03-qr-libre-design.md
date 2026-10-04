@@ -1,105 +1,105 @@
-# qr-libre — diseño
+# qr-libre — design
 
-Fecha: 2026-10-03
-Estado: aprobado en conversación, pendiente de revisión escrita
+Date: 2026-10-03
+Status: approved
 
-## Propósito
+## Purpose
 
-Generador de códigos QR **estáticos** como ejecutable portable para Windows. Nace para que una artista (carriecatt.carrd.co) tenga un QR que no caduque: los servicios gratuitos generan QR *dinámicos* que redirigen por su servidor y dejan de funcionar al acabar la prueba. Un QR estático codifica la URL directamente y no depende de nadie.
+A portable Windows executable that generates **static** QR codes. Free online generators usually produce *dynamic* QR codes that redirect through their own server and stop working once a trial ends. A static code encodes the URL directly and depends on nobody.
 
-Se publica como proyecto de código abierto (MIT) en `github.com/starworn/qr-libre` para cualquiera que no quiera depender de servicios que cobran por un estándar abierto.
+Published as open source (MIT) at `github.com/starworn/qr-libre` for anyone who doesn't want to pay a service for an open standard.
 
-## Criterios de éxito
+## Success criteria
 
-- Flujo completo sin conocimientos técnicos: descargar `.exe` desde Releases → doble clic → pegar URL → ajustar estética → exportar PNG/SVG.
-- Todo PNG exportado con ajustes "en verde" se lee con un celular.
-- Lo que se ve en la vista previa es exactamente lo que se exporta.
+- A non-technical user can complete the whole flow: download the `.exe` from Releases → double-click → paste a URL → adjust the look → export PNG/SVG.
+- Every PNG exported with settings "in the green" scans with a phone.
+- The preview is exactly what gets exported.
 
-## Alcance
+## Scope
 
-### Dentro
+### In
 
-- **Contenido:** campo de URL/texto; nivel de corrección de errores L/M/Q/H (por defecto Q).
-- **Forma:**
-  - Redondeo de módulos 0–100 %. Solo se redondean las esquinas *exteriores* de cada grupo (una esquina se redondea si sus dos vecinos ortogonales en esa esquina están vacíos), de modo que módulos adyacentes se funden.
-  - Redondeo independiente de los tres "ojos" (patrones de posición), 0–100 %.
-- **Color:**
-  - Módulos: sólido, degradado lineal de 2 colores (con ángulo) o radial de 2 colores.
-  - Color opcional independiente para los ojos.
-  - Fondo: color sólido o transparente.
-  - Medidor de contraste visible.
-- **Fondo:** margen (zona tranquila) 0–8 módulos, por defecto 4, aviso si < 2; redondeo de las esquinas del fondo.
-- **Destino (selector con descripción):**
-  - *Pantalla / redes (sRGB)* — por defecto.
-  - *Impresión* — además escribe 300 DPI en el PNG, muestra tamaño físico (p. ej. "2048 px = 17.3 cm a 300 DPI") y avisa de colores muy saturados que pueden apagarse en papel.
-- **Exportar:** tamaño 512 / 1024 / 2048 / 4096 px; **Guardar PNG** (principal) y **Guardar SVG** (secundario).
-  - PNG: siempre con chunk `sRGB` (y `gAMA`/`cHRM` equivalentes para lectores que ignoren `sRGB`); `pHYs` a 300 DPI en modo impresión.
-  - SVG: colores en sRGB (lo que define el estándar SVG); dimensiones físicas en modo impresión.
-- **Verificación automática de lectura:** en cada cambio se rasteriza, se decodifica con `jsQR` y se compara con el texto. Estado bajo la vista previa: `✓ Se lee correctamente` / `⚠ No se pudo leer — reduce el redondeo o sube el contraste`. Con fondo transparente se verifica compuesto sobre blanco y se muestra la nota "pégalo sobre fondos claros".
-- **Reglas de legibilidad:** avisan, no bloquean. Avisos: contraste bajo, módulos más claros que el fondo (QR invertido), margen < 2, fondo transparente. Exportar con estado `⚠` pide confirmación.
-- Recordar los últimos ajustes entre sesiones (`localStorage`).
-- Interfaz en español por defecto, conmutador a inglés.
+- **Content:** URL/text field; error-correction level L/M/Q/H (default Q).
+- **Shape:**
+  - Module rounding 0–100 %. Only the *outer* corners of each group are rounded (a corner is rounded when both orthogonal neighbours touching it are light), so adjacent modules merge into smooth shapes.
+  - Independent rounding for the three finder patterns ("eyes"), 0–100 %.
+- **Colour:**
+  - Modules: solid, 2-colour linear gradient (with angle) or 2-colour radial gradient.
+  - Optional separate colour for the eyes.
+  - Background: solid colour or transparent.
+  - Visible contrast meter.
+- **Background:** quiet-zone margin 0–8 modules, default 4, warning below 2; rounded background corners.
+- **Destination (select with description):**
+  - *Screen / social (sRGB)* — default.
+  - *Print* — additionally stores 300 DPI in the PNG, shows the physical size (e.g. "2048 px = 17.3 cm at 300 DPI") and warns about very saturated colours that dull on paper.
+- **Export:** 512 / 1024 / 2048 / 4096 px; **Save PNG** (primary) and **Save SVG** (secondary).
+  - PNG: always an `sRGB` chunk (plus equivalent `gAMA`/`cHRM` for readers that ignore `sRGB`); `pHYs` at 300 DPI in print mode.
+  - SVG: sRGB colours (what the SVG standard defines); physical dimensions in print mode.
+- **Automatic scan check:** on every change the code is rasterised, decoded with `jsQR` and compared with the text. Status under the preview: `✓ Scans correctly` / `⚠ Could not be read — reduce rounding or raise contrast`. Transparent backgrounds are checked composited on white, with the note "place it on light surfaces".
+- **Legibility rules:** warn, never block. Warnings: low contrast, modules lighter than the background (inverted), margin < 2, transparent background. Exporting while the status is `⚠` asks for confirmation.
+- Remember the last settings between sessions (`localStorage`); a Reset button (with confirmation) restores the default style.
+- UI in Spanish and English, chosen from the system locale on first run, switchable at any time.
 
-### Fuera (deliberadamente)
+### Out (deliberately)
 
-- Logo central, patrones por bloque, plantillas, historial.
-- Exportación CMYK real (requiere el perfil ICC específico de cada imprenta; uno genérico causa más problemas de los que resuelve — se explica en el README).
-- Demo web hospedada.
-- Firma de código del `.exe`.
-- Soporte para Windows 7/8 o anteriores (Tauri/WebView2 exige Windows 10+).
+- Centre logo, per-module patterns, templates, history.
+- Real CMYK export (needs each print shop's own ICC profile; a generic one causes more problems than it solves — explained in the README).
+- Hosted web demo.
+- Code signing of the `.exe`.
+- Windows 7/8 or older (Tauri/WebView2 requires Windows 10+).
 
-## Arquitectura
+## Architecture
 
-Tauri 2 + Vite + TypeScript sin framework. Una sola ventana.
+Tauri 2 + Vite + TypeScript, no UI framework. A single window.
 
-### Módulos del frontend (`src/`)
+### Frontend modules (`src/`)
 
-Cada uno con una responsabilidad y probable de forma aislada:
+Each has one responsibility and can be tested in isolation:
 
-| Módulo | Entrada → salida |
+| Module | Input → output |
 |---|---|
-| `encode.ts` | texto + nivel ECC → matriz booleana + posiciones de los ojos (usa `qrcode-generator`) |
-| `render.ts` | matriz + `Style` → string SVG. **Única fuente de verdad**: vista previa, SVG y PNG salen de aquí |
-| `raster.ts` | SVG + tamaño → PNG (canvas) y luego inyección de chunks `sRGB`/`gAMA`/`cHRM`/`pHYs` |
-| `png-chunks.ts` | manipulación binaria de chunks PNG (insertar, CRC) |
-| `verify.ts` | píxeles RGBA + texto esperado → `{ ok, decoded }` (usa `jsQR`; compone sobre blanco si hay transparencia) |
-| `contrast.ts` | colores → ratio de contraste WCAG, detección de inversión, heurística de saturación para impresión |
-| `settings.ts` | tipo `Style`, valores por defecto, persistencia en `localStorage` |
-| `i18n.ts` | textos ES/EN |
-| `ui.ts` / `main.ts` | construcción del DOM, enlace controles → estado → render → verificación |
+| `encode.ts` | text + ECC level → boolean matrix + eye positions (uses `qrcode-generator`) |
+| `render.ts` | matrix + `Style` → SVG string. **Single source of truth**: preview, SVG and PNG all come from here |
+| `raster.ts` | SVG + size → PNG (canvas) |
+| `png-chunks.ts` | binary PNG chunk handling (insert, CRC); `sRGB`/`gAMA`/`cHRM`/`pHYs` |
+| `verify.ts` | RGBA pixels + expected text → `{ ok, decoded }` (uses `jsQR`; composites on white when transparent) |
+| `contrast.ts` | colours → WCAG contrast ratio, inversion detection, print saturation heuristic |
+| `settings.ts` | `Style` type, defaults, persistence in `localStorage` |
+| `i18n.ts` | ES/EN strings |
+| `main.ts` | DOM wiring: controls → state → render → verification |
 
 ### Rust (`src-tauri/`)
 
-Mínimo: plugins oficiales `tauri-plugin-dialog` (diálogo Guardar como) y `tauri-plugin-fs` (escribir bytes). Sin comandos propios salvo que surja necesidad.
+Minimal: the official `tauri-plugin-dialog` (Save as dialog) and `tauri-plugin-fs` (write bytes) plugins. No custom commands.
 
-### Flujo de datos
+### Data flow
 
 ```
-controles → Style ─┐
-texto ────────────→ encode → matriz → render → SVG ─→ vista previa
-                                              ├→ raster → PNG ─→ verify → indicador
-                                              └→ (al exportar) diálogo → fs.writeFile
+controls → Style ─┐
+text ─────────────→ encode → matrix → render → SVG ─→ preview
+                                              ├→ raster → PNG ─→ verify → status
+                                              └→ (on export) dialog → fs.writeFile
 ```
 
-La verificación usa un raster pequeño (p. ej. 512 px) con *debounce* para no frenar la interfaz; la exportación usa el tamaño elegido.
+Verification uses a debounced raster sized to the code's density (≥ 512 px, ~5 px per module, capped at the export size) so the UI stays responsive; export uses the chosen size.
 
-## Distribución
+## Distribution
 
 - **GitHub Actions:**
-  - `ci.yml` — en cada push/PR: `npm ci`, typecheck, `vitest`.
-  - `release.yml` — al crear tag `v*`: build en `windows-latest`, sube el `.exe` portable (binario de `target/release`, sin instalador) a un GitHub Release.
-- **README (ES + EN):** qué es y por qué estático, descarga, aviso de SmartScreen con captura (*Más información → Ejecutar de todos modos*), requisitos (Windows 10/11), nota de color/impresión, cómo compilar.
-- Licencia MIT. Repo: `starworn/qr-libre`. El push espera al script para cambiar de cuenta de GitHub (tarea aparte).
+  - `ci.yml` — on every push/PR: `npm ci`, typecheck, `vitest`.
+  - `release.yml` — on a `v*` tag: build on `windows-latest`, upload the portable `.exe` (the `target/release` binary, no installer) to a GitHub Release.
+- **README (EN + ES):** what it is and why static, download, SmartScreen notice (*More info → Run anyway*), requirements (Windows 10/11), colour/print notes, how to build.
+- MIT licence.
 
-## Pruebas
+## Testing
 
-1. **Unitarias (Vitest):** contraste, detección de inversión, heurística de saturación, chunks PNG (CRC correcto, orden de chunks, valor de DPI), lógica de esquinas exteriores del redondeo.
-2. **Ida y vuelta automatizada:** matriz de configuraciones (redondeo 0/50/100, ojos redondeados, sólido/lineal/radial, color de ojos, fondo transparente, márgenes 0/2/4/8, ECC L/M/Q/H, URLs corta y larga) → `render` → rasterizar en Node (`@resvg/resvg-js`) → `jsQR` → mismo texto. Los resultados fijan los límites seguros de los controles con datos y no a ojo.
-3. **Galería de exports (`npm run gallery`):** genera un conjunto variado de PNG/SVG a `gallery/` con un `index.html` de hoja de contactos (miniatura + config + resultado de verificación). Sirve para la **revisión visual manual** conjunta y para escanear con el celular.
-4. **Prueba final manual:** ejecutar el `.exe` en Windows y escanear el QR de carriecatt.carrd.co con un celular.
+1. **Unit (Vitest):** contrast, inversion detection, saturation heuristic, PNG chunks (CRC, chunk order, DPI value), outer-corner rounding logic, settings sanitising, export flow with injected dependencies.
+2. **Automated round-trip:** a matrix of configurations (rounding 0/50/100, rounded eyes, solid/linear/radial, eye colour, transparent background, margins 2/4/8, ECC L/M/Q/H, short and long URLs, non-ASCII) → `render` → rasterise in Node (`@resvg/resvg-js`) → `jsQR` → same text. The results set the safe control limits from data rather than by eye.
+3. **Export gallery (`npm run gallery`):** writes a varied set of PNG/SVG files to `gallery/` with an `index.html` contact sheet (thumbnail + config + verification result) for manual visual review and phone scanning.
+4. **Final manual test:** run the `.exe` on Windows and scan an exported code with a phone.
 
-## Riesgos
+## Risks
 
-- **SmartScreen** asusta a usuarios no técnicos → README con captura y explicación clara.
-- **Diferencias de rasterización** entre resvg (pruebas) y el canvas de WebView2 (app) → la verificación en la app usa el canvas real, así que el indicador de la app manda.
-- **Desarrollo en Linux:** webkit2gtk necesita `WEBKIT_DISABLE_DMABUF_RENDERER=1` en esta máquina (NVIDIA + Hyprland).
+- **SmartScreen** scares non-technical users → README explains it clearly.
+- **Rasterisation differences** between resvg (tests) and the WebView2 canvas (app) → the in-app check uses the real canvas, so the app's indicator is authoritative.
+- **Linux development:** on NVIDIA + Wayland, webkit2gtk needs `WEBKIT_DISABLE_DMABUF_RENDERER=1` (`launch.sh`).

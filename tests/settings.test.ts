@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {
-  DEFAULT_SETTINGS, DEFAULT_STYLE, LIMITS, loadSettings, resetStyle, saveSettings, sanitizeStyle,
+  DEFAULT_SETTINGS, DEFAULT_STYLE, LIMITS, detectLang, loadSettings, resetStyle, saveSettings, sanitizeStyle,
 } from '../src/settings';
 
 const mem = (init: Record<string, string> = {}) => {
@@ -82,5 +82,22 @@ describe('resetStyle', () => {
     const r = resetStyle(custom);
     expect(r).toEqual({ text: 'https://carriecatt.carrd.co', lang: 'en', style: DEFAULT_STYLE });
     expect(r.style).not.toBe(DEFAULT_STYLE); // a copy, so later edits never mutate the defaults
+  });
+});
+
+describe('detectLang', () => {
+  it('Spanish for any es-* system locale, English otherwise', () => {
+    expect(detectLang('es-MX')).toBe('es');
+    expect(detectLang('es')).toBe('es');
+    expect(detectLang('ES-es')).toBe('es');
+    expect(detectLang('en-US')).toBe('en');
+    expect(detectLang('pt-BR')).toBe('en');
+    expect(detectLang(undefined)).toBe('en');
+  });
+
+  it('a first run uses the detected language; a saved choice wins afterwards', () => {
+    expect(loadSettings(mem(), 'en').lang).toBe('en');
+    const s = mem({ 'qr-libre.settings.v1': JSON.stringify({ lang: 'es' }) });
+    expect(loadSettings(s, 'en').lang).toBe('es');
   });
 });
